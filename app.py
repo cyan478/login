@@ -11,10 +11,17 @@ def login():
 
 @app.route("/authenticate/", methods = ['POST'])
 def auth():
-    print request.headers
-    print request.form
-    print request.form['user']
-    return "ok"
+   print request.headers
+   print request.form
+   #print request.form['user']
+   #print request.form['password']
+   user = "hello"
+   pw = "itsme"
+   if (request.form['user'] == user and request.form['password'] == pw):
+   		return "Successful login!! Welcome"
+   else:
+    	return "Unsucessful login"
+
 
 if __name__ == "__main__":
     app.debug = True
