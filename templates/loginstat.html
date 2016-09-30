@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+
+<head>
+	<title> Authentification </title>
+</head>
+
+<body>
+
+	{% if auth %}
+		Successful Login.
+	{% elif auth == False %}
+		Unsuccessful Login. <br>
+		<a href = "/"> Try again </a>
+	{% endif %}
+	
+</body>
+
+</html>

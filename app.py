@@ -17,11 +17,8 @@ def auth():
    #print request.form['password']
    user = "hello"
    pw = "itsme"
-   if (request.form['user'] == user and request.form['password'] == pw):
-   		return "Successful login!! Welcome"
-   else:
-    	return "Unsucessful login"
-
+   auth = (request.form['user'] == user and request.form['password'] == pw)
+   return render_template('loginstat.html', auth = auth)
 
 if __name__ == "__main__":
     app.debug = True
