@@ -8,10 +8,14 @@
 <body>
 
 	{% if auth %}
-		Successful Login.
+		Successful Login. Enjoy this blank page of nothingness.
+
+
 	{% elif auth == False %}
-		Unsuccessful Login. <br>
-		<a href = "/"> Try again </a>
+		Unsuccessful Login. {{ message }} <br> <br>
+		<a href = "/"> Try again.</a>
+
+
 	{% endif %}
 	
 </body>
