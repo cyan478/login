@@ -2,19 +2,22 @@
 <html>
 
   <head>
-    <title> form html </title>
+    <title> Login </title>
     <center><h1>Login Here:</h1></center>
   </head>
 
   <body>
     <center>
+      {{ message }}
+      <br>
       <br>
       <form action = "/authenticate/" method = "POST">
 	     Username: <input type = "text" name = "user"> <br> <br>
        Password: <input type = "password" name = "password"> <br> <br>
 	     <input type = "submit" value= "Submit"> 
       </form>
-    </center>
+      <br>
+      Don't have an acccount? Register <a href = "/register/"> here</a>.
   </body>
 
 </html>
