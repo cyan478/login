@@ -1,6 +1,6 @@
 #9/28
 from flask import Flask, render_template, request, session, url_for, redirect
-from utils.authreader import readIn, dic, availAlready, checkAcc, makeAcc
+from utils.authreader import  dic, availAlready, checkAcc, makeAcc
 import hashlib, os
 
 app = Flask(__name__)
@@ -44,7 +44,6 @@ def auth():
    if stat == 'Login':
        if user == "" or pw == "": #CHECKING FOR STUPID ACTS
            return render_template('login.html', message = "Both fields must be filled out.")
-       readIn()
        if availAlready(user,pw) == False:
        	return render_template('loginstat.html', auth = False, message = "This username does not exist.")
        elif availAlready(user,pw):
@@ -56,7 +55,6 @@ def auth():
    elif stat == 'Register':
     	if user == "" or pw == "": #CHECKING FOR STUPID ACTS
             return render_template('login.html', message = "Please fill in both fields.")
-        readIn()
         if availAlready(user,pw):
             return render_template('login.html', message = "That username already exists. Please use another one.")
         elif availAlready(user,pw) == False:
