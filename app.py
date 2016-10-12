@@ -1,17 +1,35 @@
 #9/28
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, url_for, redirect
 from utils.authreader import readIn, dic, availAlready, checkAcc, makeAcc
-import hashlib
+import hashlib, os
 
 app = Flask(__name__)
-
+app.secret_key=os.urandom(32)
 
 
 @app.route("/")
 @app.route("/login/")
 def login():
     print request.headers
-    return render_template('login.html', message = "")
+    if len(session.keys()) == 0:
+        return render_template('login.html', message = "")
+    else:
+        return redirect(url_for('home'))
+    
+
+@app.route("/home/")
+def home():
+	print session['user']
+	return render_template('home.html', uname = session['user'])
+
+@app.route("/logout/")
+def logout():
+	if len(session.keys()) == 0:
+		return redirect(url_for('login'))
+	else:
+		session.pop('user')
+		return render_template('login.html', message="You have logged out.")
+
 
 @app.route("/authenticate/", methods = ['GET','POST'])
 def auth():
@@ -24,7 +42,6 @@ def auth():
    stat = request.form['account']
 
    if stat == 'Login':
-   	
        if user == "" or pw == "": #CHECKING FOR STUPID ACTS
            return render_template('login.html', message = "Both fields must be filled out.")
        readIn()
@@ -33,12 +50,11 @@ def auth():
        elif availAlready(user,pw):
        	if checkAcc(user,pw) == False:
        		return render_template('loginstat.html', auth = False, message = "Your password is incorrect.")
-       		
-       return render_template('loginstat.html', auth = True)
+       session['user'] = user		
+       return redirect(url_for('home'))
         
    elif stat == 'Register':
-    	
-        if user == "" or pw == "": #CHECKING FOR STUPID ACTS
+    	if user == "" or pw == "": #CHECKING FOR STUPID ACTS
             return render_template('login.html', message = "Please fill in both fields.")
         readIn()
         if availAlready(user,pw):
@@ -49,6 +65,8 @@ def auth():
             print dic
             
         return render_template('login.html', message = "Your account was successfully made! Login below.")
+
+
 
 if __name__ == "__main__":
     app.debug = True
